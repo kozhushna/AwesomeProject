@@ -1,5 +1,8 @@
 import React from 'react';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
+import Svg, { Use, Image, Path } from 'react-native-svg';
+import { SvgUri } from 'react-native-svg';
+import UploadFoto from '../Icons/UploadFoto.svg';
 
 const LoadImageButton = () => {
   return (
@@ -9,7 +12,9 @@ const LoadImageButton = () => {
       onPress={() => console.log('Button pressed!')}
       color="white"
     >
-      <Text style={styles.buttonText}>+</Text>
+      <View style={styles.container}>
+        <UploadFoto width={13} height={13} />
+      </View>
     </Pressable>
   );
 };
@@ -23,14 +28,14 @@ const styles = StyleSheet.create({
     left: 120,
     transform: [{ translateX: -12.5 }, { translateY: -12.5 }],
     borderRadius: 12.5,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: '#FF6C00',
+    zIndex: 105,
   },
-  buttonText: {
-    color: 'black',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
