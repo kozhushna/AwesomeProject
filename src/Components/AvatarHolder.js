@@ -2,12 +2,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import LoadImageButton from './LoadImageButton';
 
-const AvatarHolder = () => (
-  <View style={styles.fotoWrapper}>
-    <View style={styles.imageHolder}></View>
-    <LoadImageButton></LoadImageButton>
-  </View>
-);
+const AvatarHolder = () => {
+  return (
+    <View style={styles.fotoWrapper}>
+      <View style={styles.imageHolder}></View>
+      <LoadImageButton></LoadImageButton>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   fotoWrapper: {
@@ -16,7 +18,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 203,
     left: '50%',
-    transform: [{ translateX: '-50%' }, { translateY: '-50%' }],
+    transform: [{ translateX: -65 }, { translateY: -65 }],
     paddingRight: 10,
     paddingLeft: 10,
     paddingTop: 10,
