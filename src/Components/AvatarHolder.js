@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     position: 'absolute',
-    top: 203,
+    top: 0,
     left: '50%',
     transform: [{ translateX: -65 }, { translateY: -65 }],
     paddingRight: 10,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#F6F6F6',
     borderRadius: 16,
-    zIndex: 100,
+    // zIndex: 100,
   },
 });
 
