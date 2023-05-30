@@ -8,11 +8,11 @@ import AvatarHolder from '../Components/AvatarHolder';
 const RegistrationScreen = () => (
   <View style={styles.container}>
     <ImageBackground source={PhotoBG} resizeMode="cover" style={styles.image}>
-      <AvatarHolder />
       <View style={styles.formContainer}>
         <SignUpForm />
       </View>
     </ImageBackground>
+    <AvatarHolder />
   </View>
 );
 
@@ -26,12 +26,9 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-
-    width: '100%',
-    height: '100%',
-    paddingTop: 263,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    zIndex: 2,
   },
 });
 
