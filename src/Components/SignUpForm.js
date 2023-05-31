@@ -6,6 +6,10 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
 } from 'react-native';
 
 import AvatarHolder from './AvatarHolder';
@@ -21,47 +25,58 @@ const SignUpForm = () => {
   };
 
   return (
-    <View>
-      <View style={styles.container}>
-        <Text style={styles.title}>Реєстрація</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Логін"
-          onChangeText={setLogin}
-          value={login}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Адреса електронної пошти"
-          onChangeText={setEmail}
-          value={email}
-        />
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={[styles.input, styles.inputPassword]}
-            placeholder="Пароль"
-            secureTextEntry
-            onChangeText={setPassword}
-            value={password}
-          />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={-75}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <View style={styles.container}>
+            <Text style={styles.title}>Реєстрація</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Логін"
+              onChangeText={setLogin}
+              value={login}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Адреса електронної пошти"
+              onChangeText={setEmail}
+              value={email}
+            />
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={[styles.input, styles.inputPassword]}
+                placeholder="Пароль"
+                secureTextEntry
+                onChangeText={setPassword}
+                value={password}
+              />
 
-          <TouchableHighlight style={styles.linkShowPassword}>
-            <Text style={styles.linkText}>Показати</Text>
-          </TouchableHighlight>
-        </View>
+              <TouchableHighlight style={styles.linkShowPassword}>
+                <Text style={styles.linkText}>Показати</Text>
+              </TouchableHighlight>
+            </View>
 
-        <Pressable title="Sign Up" style={styles.button} onPress={handleSignUp}>
-          <Text style={styles.buttonText}>Зареєструватись</Text>
-        </Pressable>
-        <View style={styles.holder}>
-          <Text style={styles.linkText}>Вже є акаунт?</Text>
-          <TouchableHighlight>
-            <Text style={styles.linkText}>Увійти</Text>
-          </TouchableHighlight>
+            <Pressable
+              title="Sign Up"
+              style={styles.button}
+              onPress={handleSignUp}
+            >
+              <Text style={styles.buttonText}>Зареєструватись</Text>
+            </Pressable>
+            <View style={styles.holder}>
+              <Text style={styles.linkText}>Вже є акаунт?</Text>
+              <TouchableHighlight>
+                <Text style={styles.linkText}>Увійти</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+          <AvatarHolder />
         </View>
-      </View>
-      <AvatarHolder />
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
