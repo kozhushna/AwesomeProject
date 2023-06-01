@@ -1,29 +1,32 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { ImageBackground, StyleSheet, View } from 'react-native';
+import PhotoBG from '../Images/PhotoBG.png';
+import LoginForm from '../Components/LoginForm';
+import SignUpForm from '../Components/SignUpForm';
 
-const ViewBoxesWithColorAndText = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.red}>just red</Text>
-      <Text style={styles.bigBlue}>just bigBlue</Text>
-      <Text style={[styles.bigBlue, styles.red]}>bigBlue, then red</Text>
-      <Text style={[styles.red, styles.bigBlue]}>red, then bigBlue</Text>
-    </View>
-  );
-};
+const RegistrationScreen = () => (
+  <View style={styles.container}>
+    <ImageBackground source={PhotoBG} resizeMode="cover" style={styles.image}>
+      <View style={styles.formContainer}>
+        <LoginForm />
+      </View>
+    </ImageBackground>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    flex: 1,
   },
-  bigBlue: {
-    color: 'blue',
-    fontWeight: 'bold',
-    fontSize: 30,
+  image: {
+    flex: 1,
+    justifyContent: 'center',
   },
-  red: {
-    color: 'red',
+  formContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
 });
 
-export default ViewBoxesWithColorAndText;
+export default RegistrationScreen;

@@ -11,11 +11,9 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-
-import AvatarHolder from './AvatarHolder';
+import { useFonts } from 'expo-font';
 
 const SignUpForm = () => {
-  const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,56 +22,51 @@ const SignUpForm = () => {
     console.log('Password:', password);
   };
 
+  const [fontsLoaded] = useFonts({
+    RobotoRegular: require('../Fonts/Roboto-Regular.ttf'),
+    RobotoMedium: require('../Fonts/Roboto-Medium.ttf'),
+  });
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={-75}
+      keyboardVerticalOffset={-20}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
-          <View style={styles.container}>
-            <Text style={styles.title}>Реєстрація</Text>
+        <View style={styles.container}>
+          <Text style={styles.title}>Увійти</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Адреса електронної пошти"
+            onChangeText={setEmail}
+            value={email}
+          />
+          <View style={styles.passwordContainer}>
             <TextInput
-              style={styles.input}
-              placeholder="Логін"
-              onChangeText={setLogin}
-              value={login}
+              style={[styles.input, styles.inputPassword]}
+              placeholder="Пароль"
+              secureTextEntry
+              onChangeText={setPassword}
+              value={password}
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Адреса електронної пошти"
-              onChangeText={setEmail}
-              value={email}
-            />
-            <View style={styles.passwordContainer}>
-              <TextInput
-                style={[styles.input, styles.inputPassword]}
-                placeholder="Пароль"
-                secureTextEntry
-                onChangeText={setPassword}
-                value={password}
-              />
 
-              <TouchableHighlight style={styles.linkShowPassword}>
-                <Text style={styles.linkText}>Показати</Text>
-              </TouchableHighlight>
-            </View>
-
-            <Pressable
-              title="Sign Up"
-              style={styles.button}
-              onPress={handleSignUp}
-            >
-              <Text style={styles.buttonText}>Зареєструватись</Text>
-            </Pressable>
-            <View style={styles.holder}>
-              <Text style={styles.linkText}>Вже є акаунт?</Text>
-              <TouchableHighlight>
-                <Text style={styles.linkText}>Увійти</Text>
-              </TouchableHighlight>
-            </View>
+            <TouchableHighlight style={styles.linkShowPassword}>
+              <Text style={styles.linkText}>Показати</Text>
+            </TouchableHighlight>
           </View>
-          <AvatarHolder />
+
+          <Pressable
+            title="Sign Up"
+            style={styles.button}
+            onPress={handleSignUp}
+          >
+            <Text style={styles.buttonText}>Зареєструватись</Text>
+          </Pressable>
+          <View style={styles.holder}>
+            <Text style={styles.linkText}>Вже є акаунт?</Text>
+            <TouchableHighlight>
+              <Text style={styles.linkText}>Увійти</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -82,9 +75,9 @@ const SignUpForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 560,
-    paddingBottom: 45,
-    paddingTop: 92,
+    minHeight: 490,
+    paddingBottom: 111,
+    paddingTop: 32,
     paddingHorizontal: 16,
     backgroundColor: '#FFFFFF',
     textAlign: 'center',
@@ -94,6 +87,7 @@ const styles = StyleSheet.create({
 
   title: {
     marginBottom: 32,
+    fontFamily: 'RobotoMedium',
     fontWeight: 500,
     fontSize: 30,
     textAlign: 'center',
@@ -113,16 +107,13 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 15,
-
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     height: 50,
     backgroundColor: '#FF6C00',
     borderRadius: 100,
     marginBottom: 16,
   },
   buttonText: {
+    fontFamily: 'RobotoRegular',
     fontWeight: 400,
     fontSize: 16,
     color: '#FFFFFF',
@@ -138,6 +129,7 @@ const styles = StyleSheet.create({
   },
 
   linkText: {
+    fontFamily: 'RobotoRegular',
     fontWeight: 400,
     fontSize: 16,
     color: '#1B4371',
