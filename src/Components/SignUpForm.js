@@ -53,7 +53,6 @@ const SignUpForm = () => {
   };
 
   const handlePasswordPress = (state) => {
-    console.log(state);
     setIsPasswordShowed(state);
   };
 
