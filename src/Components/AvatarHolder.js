@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#F6F6F6',
     borderRadius: 16,
-    // zIndex: 100,
   },
 });
 

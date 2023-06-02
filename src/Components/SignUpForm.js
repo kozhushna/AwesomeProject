@@ -18,6 +18,33 @@ const SignUpForm = () => {
   const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoginFocused, setIsLoginFocused] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+
+  const handleInputLoginFocus = () => {
+    setIsLoginFocused(true);
+  };
+
+  const handleInputLoginBlur = () => {
+    setIsLoginFocused(false);
+  };
+
+  const handleInputEmailFocus = () => {
+    setIsEmailFocused(true);
+  };
+
+  const handleInputEmailBlur = () => {
+    setIsEmailFocused(false);
+  };
+
+  const handleInputPasswordFocus = () => {
+    setIsPasswordFocused(true);
+  };
+
+  const handleInputPasswordBlur = () => {
+    setIsPasswordFocused(false);
+  };
 
   const handleSignUp = () => {
     console.log('Email:', email);
@@ -34,24 +61,34 @@ const SignUpForm = () => {
           <View style={styles.container}>
             <Text style={styles.title}>Реєстрація</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, isLoginFocused && styles.inputFocused]}
               placeholder="Логін"
               onChangeText={setLogin}
               value={login}
+              onFocus={handleInputLoginFocus}
+              onBlur={handleInputLoginBlur}
             />
             <TextInput
-              style={styles.input}
+              style={[styles.input, isEmailFocused && styles.inputFocused]}
               placeholder="Адреса електронної пошти"
               onChangeText={setEmail}
               value={email}
+              onFocus={handleInputEmailFocus}
+              onBlur={handleInputEmailBlur}
             />
             <View style={styles.passwordContainer}>
               <TextInput
-                style={[styles.input, styles.inputPassword]}
+                style={[
+                  styles.input,
+                  styles.inputPassword,
+                  isPasswordFocused && styles.inputFocused,
+                ]}
                 placeholder="Пароль"
                 secureTextEntry
                 onChangeText={setPassword}
                 value={password}
+                onFocus={handleInputPasswordFocus}
+                onBlur={handleInputPasswordBlur}
               />
 
               <TouchableHighlight style={styles.linkShowPassword}>
@@ -94,11 +131,13 @@ const styles = StyleSheet.create({
 
   title: {
     marginBottom: 32,
+    fontFamily: 'Roboto',
     fontWeight: 500,
     fontSize: 30,
     textAlign: 'center',
     color: '#212121',
   },
+
   input: {
     height: 50,
     backgroundColor: '#F6F6F6',
@@ -108,21 +147,26 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 8,
   },
+
   inputPassword: {
     marginBottom: 0,
   },
+
+  inputFocused: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#FF6C00',
+  },
+
   button: {
     paddingVertical: 15,
-
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     height: 50,
     backgroundColor: '#FF6C00',
     borderRadius: 100,
     marginBottom: 16,
   },
+
   buttonText: {
+    fontFamily: 'Roboto',
     fontWeight: 400,
     fontSize: 16,
     color: '#FFFFFF',
@@ -138,6 +182,7 @@ const styles = StyleSheet.create({
   },
 
   linkText: {
+    fontFamily: 'Roboto',
     fontWeight: 400,
     fontSize: 16,
     color: '#1B4371',

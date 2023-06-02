@@ -2,7 +2,6 @@ import React from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import PhotoBG from '../Images/PhotoBG.png';
 import LoginForm from '../Components/LoginForm';
-import SignUpForm from '../Components/SignUpForm';
 
 const RegistrationScreen = () => (
   <View style={styles.container}>

@@ -1,7 +1,5 @@
 import React from 'react';
-import { Text, View, Pressable, StyleSheet } from 'react-native';
-import Svg, { Use, Image, Path } from 'react-native-svg';
-import { SvgUri } from 'react-native-svg';
+import { View, Pressable, StyleSheet } from 'react-native';
 import UploadFoto from '../Icons/UploadFoto.svg';
 
 const LoadImageButton = () => {

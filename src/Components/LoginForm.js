@@ -11,21 +11,34 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-// import { useFonts } from 'expo-font';
 
 const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+
+  const handleInputEmailFocus = () => {
+    setIsEmailFocused(true);
+  };
+
+  const handleInputEmailBlur = () => {
+    setIsEmailFocused(false);
+  };
+
+  const handleInputPasswordFocus = () => {
+    setIsPasswordFocused(true);
+  };
+
+  const handleInputPasswordBlur = () => {
+    setIsPasswordFocused(false);
+  };
 
   const handleSignUp = () => {
     console.log('Email:', email);
     console.log('Password:', password);
   };
 
-  // const [fontsLoaded] = useFonts({
-  //   Roboto: require('../Fonts/Roboto-Black.ttf'),
-  //   // RobotoMedium: require('../Fonts/Roboto-Medium.ttf'),
-  // });
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -35,18 +48,26 @@ const SignUpForm = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Увійти</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, isEmailFocused && styles.inputFocused]}
             placeholder="Адреса електронної пошти"
             onChangeText={setEmail}
             value={email}
+            onFocus={handleInputEmailFocus}
+            onBlur={handleInputEmailBlur}
           />
           <View style={styles.passwordContainer}>
             <TextInput
-              style={[styles.input, styles.inputPassword]}
+              style={[
+                styles.input,
+                styles.inputPassword,
+                isPasswordFocused && styles.inputFocused,
+              ]}
               placeholder="Пароль"
               secureTextEntry
               onChangeText={setPassword}
               value={password}
+              onFocus={handleInputPasswordFocus}
+              onBlur={handleInputPasswordBlur}
             />
 
             <TouchableHighlight style={styles.linkShowPassword}>
@@ -93,6 +114,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#212121',
   },
+
   input: {
     height: 50,
     backgroundColor: '#F6F6F6',
@@ -102,9 +124,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 8,
   },
+
   inputPassword: {
     marginBottom: 0,
   },
+
+  inputFocused: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#FF6C00',
+  },
+
   button: {
     paddingVertical: 15,
     height: 50,
@@ -112,6 +141,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     marginBottom: 16,
   },
+
   buttonText: {
     fontFamily: 'Roboto',
     fontWeight: 400,
