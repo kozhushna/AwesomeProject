@@ -11,7 +11,7 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-import { useFonts } from 'expo-font';
+// import { useFonts } from 'expo-font';
 
 const SignUpForm = () => {
   const [email, setEmail] = useState('');
@@ -22,10 +22,10 @@ const SignUpForm = () => {
     console.log('Password:', password);
   };
 
-  const [fontsLoaded] = useFonts({
-    RobotoRegular: require('../Fonts/Roboto-Regular.ttf'),
-    RobotoMedium: require('../Fonts/Roboto-Medium.ttf'),
-  });
+  // const [fontsLoaded] = useFonts({
+  //   Roboto: require('../Fonts/Roboto-Black.ttf'),
+  //   // RobotoMedium: require('../Fonts/Roboto-Medium.ttf'),
+  // });
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
   title: {
     marginBottom: 32,
-    fontFamily: 'RobotoMedium',
+    fontFamily: 'Roboto',
     fontWeight: 500,
     fontSize: 30,
     textAlign: 'center',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   buttonText: {
-    fontFamily: 'RobotoRegular',
+    fontFamily: 'Roboto',
     fontWeight: 400,
     fontSize: 16,
     color: '#FFFFFF',
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
 
   linkText: {
-    fontFamily: 'RobotoRegular',
+    fontFamily: 'Roboto',
     fontWeight: 400,
     fontSize: 16,
     color: '#1B4371',
