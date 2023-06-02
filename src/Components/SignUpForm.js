@@ -21,6 +21,7 @@ const SignUpForm = () => {
   const [isLoginFocused, setIsLoginFocused] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [isPasswordShowed, setIsPasswordShowed] = useState(true);
 
   const handleInputLoginFocus = () => {
     setIsLoginFocused(true);
@@ -49,6 +50,11 @@ const SignUpForm = () => {
   const handleSignUp = () => {
     console.log('Email:', email);
     console.log('Password:', password);
+  };
+
+  const handlePasswordPress = (state) => {
+    console.log(state);
+    setIsPasswordShowed(state);
   };
 
   return (
@@ -84,14 +90,18 @@ const SignUpForm = () => {
                   isPasswordFocused && styles.inputFocused,
                 ]}
                 placeholder="Пароль"
-                secureTextEntry
+                secureTextEntry={isPasswordShowed}
                 onChangeText={setPassword}
                 value={password}
                 onFocus={handleInputPasswordFocus}
                 onBlur={handleInputPasswordBlur}
               />
 
-              <TouchableHighlight style={styles.linkShowPassword}>
+              <TouchableHighlight
+                style={styles.linkShowPassword}
+                onPressIn={() => handlePasswordPress(false)}
+                onPressOut={() => handlePasswordPress(true)}
+              >
                 <Text style={styles.linkText}>Показати</Text>
               </TouchableHighlight>
             </View>
