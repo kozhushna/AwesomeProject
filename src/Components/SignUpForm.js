@@ -48,6 +48,7 @@ const SignUpForm = () => {
   };
 
   const handleSignUp = () => {
+    console.log('Login:', login);
     console.log('Email:', email);
     console.log('Password:', password);
   };
