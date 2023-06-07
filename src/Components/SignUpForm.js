@@ -49,12 +49,6 @@ const SignUpForm = () => {
     setIsPasswordFocused(false);
   };
 
-  const handleSignUp = () => {
-    console.log('Login:', login);
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
-
   const handlePasswordPress = (state) => {
     setIsPasswordShowed(state);
   };
@@ -111,7 +105,7 @@ const SignUpForm = () => {
             <Pressable
               title="Sign Up"
               style={styles.button}
-              onPress={handleSignUp}
+              onPress={() => navigation.navigate('Home')}
             >
               <Text style={styles.buttonText}>Зареєструватись</Text>
             </Pressable>

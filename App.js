@@ -30,10 +30,15 @@ export default function App() {
             headerTitleAlign: 'center',
           }}
         />
-        {/* <MainStack.Screen
-          name="CreatePostsScreen"
+        <MainStack.Screen
+          name="Home"
           component={CreatePostScreen}
-        /> */}
+          options={{
+            title: 'Публікації',
+            headerShown: true,
+            headerTitleAlign: 'center',
+          }}
+        />
       </MainStack.Navigator>
     </NavigationContainer>
   );
