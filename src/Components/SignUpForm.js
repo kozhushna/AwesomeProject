@@ -11,6 +11,7 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import AvatarHolder from './AvatarHolder';
 
@@ -22,6 +23,7 @@ const SignUpForm = () => {
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isPasswordShowed, setIsPasswordShowed] = useState(true);
+  const navigation = useNavigation();
 
   const handleInputLoginFocus = () => {
     setIsLoginFocused(true);
@@ -115,7 +117,7 @@ const SignUpForm = () => {
             </Pressable>
             <View style={styles.holder}>
               <Text style={styles.linkText}>Вже є акаунт?</Text>
-              <TouchableHighlight>
+              <TouchableHighlight onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.linkText}>Увійти</Text>
               </TouchableHighlight>
             </View>

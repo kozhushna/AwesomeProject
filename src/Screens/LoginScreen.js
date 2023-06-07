@@ -1,11 +1,12 @@
 import React from 'react';
+
 import FormContainer from '../Components/FormContainer';
 import LoginForm from '../Components/LoginForm';
 
-const RegistrationScreen = () => (
+const LoginScreen = () => (
   <FormContainer>
     <LoginForm />
   </FormContainer>
 );
 
-export default RegistrationScreen;
+export default LoginScreen;

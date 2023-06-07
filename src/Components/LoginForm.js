@@ -11,6 +11,7 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const SignUpForm = () => {
   const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ const SignUpForm = () => {
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isPasswordShowed, setIsPasswordShowed] = useState(true);
+  const navigation = useNavigation();
 
   const handleInputEmailFocus = () => {
     setIsEmailFocused(true);
@@ -68,7 +70,7 @@ const SignUpForm = () => {
                 isPasswordFocused && styles.inputFocused,
               ]}
               placeholder="Пароль"
-              secureTextEntry
+              secureTextEntry={isPasswordShowed}
               onChangeText={setPassword}
               value={password}
               onFocus={handleInputPasswordFocus}
@@ -89,12 +91,14 @@ const SignUpForm = () => {
             style={styles.button}
             onPress={handleLogin}
           >
-            <Text style={styles.buttonText}>Зареєструватись</Text>
+            <Text style={styles.buttonText}>Увійти</Text>
           </Pressable>
           <View style={styles.holder}>
-            <Text style={styles.linkText}>Вже є акаунт?</Text>
-            <TouchableHighlight>
-              <Text style={styles.linkText}>Увійти</Text>
+            <Text style={styles.linkText}>Немає акаунту?</Text>
+            <TouchableHighlight
+              onPress={() => navigation.navigate('Registration')}
+            >
+              <Text style={styles.linkText}>Зареєструватись</Text>
             </TouchableHighlight>
           </View>
         </View>
