@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   View,
   StyleSheet,
@@ -6,12 +7,14 @@ import {
   Image,
   SafeAreaView,
   VirtualizedList,
+  TouchableOpacity,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import FormContainer from '../Components/FormContainer';
 import AvatarImageHolder from '../Components/AvatarImageHolder';
+import Message from '../Icons/Message.svg';
 
 const PUBLICATIONS = [
   {
@@ -47,12 +50,23 @@ const ProfileScreen = () => {
     <View style={styles.itemContainer}>
       <Image source={item.image} style={styles.image} />
       <Text style={styles.title}>{item.title}</Text>
-      <AntDesign name="like2" size={24} color="black" />
-      <Text style={styles.text}>{item.comments}</Text>
-      <EvilIcons name="comment" size={24} color="black" />
-      <Text style={styles.text}>{item.likes}</Text>
-      <AntDesign name="enviromento" size={24} color="#BDBDBD" />
-      <Text style={styles.text}>{item.location}</Text>
+      <View style={styles.panelHolder}>
+        <View style={styles.activitiesHolder}>
+          <View style={styles.commentsHolder}>
+            <Message />
+
+            <Text style={styles.text}>{item.comments}</Text>
+          </View>
+          <View style={styles.likesHolder}>
+            <AntDesign name="like2" size={24} color="#FF6C00" />
+            <Text style={styles.text}>{item.likes}</Text>
+          </View>
+        </View>
+        <View style={styles.locationHolder}>
+          <AntDesign name="enviromento" size={24} color="#BDBDBD" />
+          <Text style={styles.text}>{item.location}</Text>
+        </View>
+      </View>
     </View>
   );
 
@@ -69,12 +83,29 @@ const ProfileScreen = () => {
   };
 
   const getItemCount = (_data) => publications.length;
+  const navigation = useNavigation();
 
   return (
     <FormContainer>
       <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.button}
+          title="Log Out"
+          onPress={() => navigation.navigate('Login')}
+          color="white"
+        >
+          <View style={styles.buttonContainer}>
+            <Feather
+              name="log-out"
+              size={24}
+              color="#BDBDBD"
+              style={styles.logOutButton}
+            />
+          </View>
+        </TouchableOpacity>
+
         <AvatarImageHolder />
-        <Entypo name="log-out" size={24} color="black" />
+
         <SafeAreaView style={styles.mainContainer}>
           <VirtualizedList
             data={publications}
@@ -109,9 +140,8 @@ const styles = StyleSheet.create({
   },
 
   itemContainer: {
-    flexDirection: 'column',
     paddingHorizontal: 8,
-    paddingVertical: 32,
+    marginBottom: 32,
   },
   image: {
     width: 343,
@@ -124,6 +154,64 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     marginVertical: 8,
+  },
+
+  panelHolder: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: 12,
+  },
+
+  commentsHolder: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+
+  likesHolder: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+
+  locationHolder: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+
+  activitiesHolder: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 24,
+  },
+
+  text: {
+    fontFamily: 'Roboto',
+    fontWeight: 400,
+    fontSize: 16,
+    lineHeight: 19,
+  },
+
+  button: {
+    position: 'absolute',
+    top: 23,
+    right: 0,
+    width: 25,
+    height: 25,
+    marginRight: 10,
+  },
+
+  buttonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
