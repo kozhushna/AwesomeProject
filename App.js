@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RegistrationScreen from './src/Screens/RegistrationScreen';
 import LoginScreen from './src/Screens/LoginScreen';
-import CreatePostScreen from './src/Screens/CreatePostsScreen';
+import PostsScreen from './src/Screens/PostsScreen';
 import LogOut from './src/Icons/LogOut.svg';
 
 const MainStack = createStackNavigator();
@@ -34,7 +34,7 @@ export default function App() {
         />
         <MainStack.Screen
           name="Home"
-          component={CreatePostScreen}
+          component={PostsScreen}
           options={{
             title: 'Публікації',
             headerShown: true,
@@ -50,6 +50,7 @@ export default function App() {
               fontSize: 17,
               lineHeight: 22,
             },
+            headerLeft: () => null,
             headerRight: () => {
               const navigation = useNavigation();
               return (

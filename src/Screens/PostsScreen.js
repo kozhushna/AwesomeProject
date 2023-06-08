@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import UserImage from '../Images/User.png';
 
-const CreatePostScreen = () => {
+const PostsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.holder}>
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatePostScreen;
+export default PostsScreen;
