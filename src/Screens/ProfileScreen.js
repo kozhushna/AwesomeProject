@@ -64,7 +64,13 @@ const ProfileScreen = () => {
         </View>
         <View style={styles.locationHolder}>
           <AntDesign name="enviromento" size={24} color="#BDBDBD" />
-          <Text style={styles.text}>{item.location}</Text>
+          <TouchableOpacity
+            title="Log Out"
+            onPress={() => navigation.navigate('Map')}
+            color="white"
+          >
+            <Text style={[styles.text, styles.underline]}>{item.location}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -197,6 +203,9 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 16,
     lineHeight: 19,
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
 
   button: {
