@@ -5,9 +5,11 @@ import {
   Text,
   Image,
   SafeAreaView,
-  FlatList,
   VirtualizedList,
 } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import FormContainer from '../Components/FormContainer';
 import AvatarImageHolder from '../Components/AvatarImageHolder';
 
@@ -15,17 +17,26 @@ const PUBLICATIONS = [
   {
     id: '1',
     image: require('../Images/Forest.jpg'),
-    title: '1',
+    title: 'Ліс',
+    comments: '8',
+    likes: '153',
+    location: 'Ukraine',
   },
   {
     id: '2',
     image: require('../Images/Sea.jpg'),
-    title: '1',
+    title: 'Захід на Чорному морі',
+    comments: '3',
+    likes: '200',
+    location: 'Ukraine',
   },
   {
     id: '3',
     image: require('../Images/Home.jpg'),
-    title: '1',
+    title: 'Старий будиночок у Венеції',
+    comments: '50',
+    likes: '200',
+    location: 'Italy',
   },
 ];
 
@@ -35,8 +46,13 @@ const ProfileScreen = () => {
   const renderItem = (item) => (
     <View style={styles.itemContainer}>
       <Image source={item.image} style={styles.image} />
-      <Text style={styles.text}>{item.title}</Text>
-      {/* <Ionicons name="ios-star" size={24} color="gold" /> */}
+      <Text style={styles.title}>{item.title}</Text>
+      <AntDesign name="like2" size={24} color="black" />
+      <Text style={styles.text}>{item.comments}</Text>
+      <EvilIcons name="comment" size={24} color="black" />
+      <Text style={styles.text}>{item.likes}</Text>
+      <AntDesign name="enviromento" size={24} color="#BDBDBD" />
+      <Text style={styles.text}>{item.location}</Text>
     </View>
   );
 
@@ -46,6 +62,9 @@ const ProfileScreen = () => {
       id: entity.id,
       title: entity.title,
       image: entity.image,
+      comments: entity.comments,
+      likes: entity.likes,
+      location: entity.location,
     };
   };
 
@@ -55,6 +74,7 @@ const ProfileScreen = () => {
     <FormContainer>
       <View style={styles.container}>
         <AvatarImageHolder />
+        <Entypo name="log-out" size={24} color="black" />
         <SafeAreaView style={styles.mainContainer}>
           <VirtualizedList
             data={publications}
@@ -90,18 +110,20 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     flexDirection: 'column',
-    alignItems: 'center',
-    padding: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 32,
   },
   image: {
     width: 343,
     height: 240,
     marginRight: 10,
   },
-  text: {
+  title: {
+    fontFamily: 'Roboto',
+    fontWeight: 500,
     fontSize: 16,
-    // flex: 1,
-    marginRight: 10,
+    lineHeight: 19,
+    marginVertical: 8,
   },
 });
 
