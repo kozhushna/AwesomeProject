@@ -8,13 +8,14 @@ import LoginScreen from './src/Screens/LoginScreen';
 import PostsScreen from './src/Screens/PostsScreen';
 import CreatePostsScreen from './src/Screens/CreatePostsScreen';
 import LogOut from './src/Icons/LogOut.svg';
+import ProfileScreen from './src/Screens/ProfileScreen';
 
 const MainStack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Create">
+      <MainStack.Navigator initialRouteName="Profile">
         <MainStack.Screen
           name="Registration"
           component={RegistrationScreen}
@@ -88,6 +89,16 @@ export default function App() {
               fontSize: 17,
               lineHeight: 22,
             },
+          }}
+        />
+
+        <MainStack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            title: 'Profile',
+            headerShown: false,
+            headerTitleAlign: 'center',
           }}
         />
       </MainStack.Navigator>
