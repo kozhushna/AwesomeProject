@@ -1,17 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { View, TextInput, Pressable, StyleSheet, Text } from 'react-native';
+import { Camera } from 'expo-camera';
+import * as MediaLibrary from 'expo-media-library';
+import {
+  View,
+  TextInput,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 
 const CreatePostScreen = () => {
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
+
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
   return (
     <View>
       <View style={styles.container}>
         <View style={styles.fotoInput}>
-          <View style={styles.imageHolder}>
-            <AntDesign name="camera" size={24} color="#BDBDBD" />
-          </View>
+          {/* <View style={styles.imageHolder}> */}
+          <Camera style={styles.camera} type={type} ref={setCameraRef}>
+            <View style={styles.photoView}>
+              {/* <TouchableOpacity
+                style={styles.flipContainer}
+                onPress={() => {
+                  setType(
+                    type === Camera.Constants.Type.back
+                      ? Camera.Constants.Type.front
+                      : Camera.Constants.Type.back
+                  );
+                }}
+              >
+                
+              </TouchableOpacity> */}
+              <TouchableOpacity
+                style={styles.imageHolder}
+                onPress={async () => {
+                  if (cameraRef) {
+                    const { uri } = await cameraRef.takePictureAsync();
+                    await MediaLibrary.createAssetAsync(uri);
+                  }
+                }}
+              >
+                <AntDesign name="camera" size={24} color="#BDBDBD" />
+              </TouchableOpacity>
+            </View>
+          </Camera>
+          {/* </View> */}
         </View>
         <Pressable title="Upload" style={styles.uploadButton}>
           <Text style={styles.buttonText}>Завантажте фото</Text>
@@ -68,6 +123,10 @@ const styles = StyleSheet.create({
   },
 
   imageHolder: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -30 }, { translateY: -30 }],
     flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
@@ -76,6 +135,45 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     backgroundColor: '#FFFFFF',
   },
+
+  camera: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+
+  photoView: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    justifyContent: 'flex-end',
+  },
+
+  flipContainer: {
+    flex: 0.1,
+    alignSelf: 'flex-end',
+  },
+
+  button: { alignSelf: 'center' },
+
+  // takePhotoOut: {
+  //   borderWidth: 2,
+  //   borderColor: 'white',
+  //   height: 50,
+  //   width: 50,
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   borderRadius: 50,
+  // },
+
+  // takePhotoInner: {
+  //   borderWidth: 2,
+  //   borderColor: 'white',
+  //   height: 40,
+  //   width: 40,
+  //   backgroundColor: 'white',
+  //   borderRadius: 50,
+  // },
 
   uploadButton: {
     width: 131,

@@ -1,28 +1,56 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 const MapScreen = () => {
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <View style={styles.holder}></View>
+      <MapView
+        style={styles.mapStyle}
+        region={{
+          ...location,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        showsUserLocation={true}
+      >
+        {location && (
+          <Marker title="I am here" coordinate={location} description="Hello" />
+        )}
+      </MapView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    paddingBottom: 32,
-    paddingTop: 32,
-    paddingHorizontal: 16,
-    backgroundColor: '#FFFFFF',
-  },
-
-  holder: {
-    flex: 0,
-    flexDirection: 'row',
+    flex: 1,
+    backgroundColor: '#fff',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+  },
+  mapStyle: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });
 
