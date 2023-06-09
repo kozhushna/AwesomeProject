@@ -14,7 +14,7 @@ export default function App() {
   return (
     <>
       <NavigationContainer>
-        <MainStack.Navigator initialRouteName="Home">
+        <MainStack.Navigator initialRouteName="Login">
           <MainStack.Screen
             name="Registration"
             component={RegistrationScreen}
