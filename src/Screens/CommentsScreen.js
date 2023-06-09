@@ -33,11 +33,22 @@ const COMMENTS = [
 const CommentScreen = () => {
   const [comments, setComments] = useState(COMMENTS);
 
-  const renderItem = (item) => (
-    <View style={styles.itemContainer}>
+  const renderItem = (item, index) => (
+    <View
+      style={[
+        styles.commentContainer,
+        index % 2 === 0 ? styles.evenRow : styles.oddRow,
+      ]}
+    >
       <Image source={item.image} style={styles.image} />
-      <Text style={styles.text}>{item.text}</Text>
-      <Text style={styles.date}>{item.date}</Text>
+      <View style={styles.contentContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{item.text}</Text>
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.date}>{item.date}</Text>
+        </View>
+      </View>
     </View>
   );
 
@@ -55,11 +66,11 @@ const CommentScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={Sea} />
+      <Image source={Sea} style={styles.image} />
       <SafeAreaView style={styles.mainContainer}>
         <VirtualizedList
           data={comments}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({ item, index }) => renderItem(item, index)}
           keyExtractor={(item) => item.id}
           getItemCount={getItemCount}
           getItem={getItem}
@@ -78,22 +89,51 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
-  itemContainer: {
-    paddingHorizontal: 8,
+  commentContainer: {
+    // paddingHorizontal: 8,
     marginBottom: 32,
+    // flex: 0,
+    width: 343,
+
+    alignItems: 'flex-start',
+    gap: 16,
   },
 
-  holder: {
-    flex: 0,
+  evenRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 24,
+  },
+
+  oddRow: {
+    flexDirection: 'row-reverse',
   },
 
   mainContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: '100%',
+    minHeight: 70,
+    flex: 0,
+    gap: 24,
+  },
+
+  contentContainer: {
+    flex: 0,
+    flexShrink: 1,
+    flexGrow: 1,
+    flexBasis: 'auto',
+    gap: 8,
+  },
+
+  textContainer: {
+    flexShrink: 1,
+    flexGrow: 1,
+    flexBasis: 'auto',
+    flexDirection: 'row',
+  },
+
+  text: {
+    fontFamily: 'Roboto',
+    fontWeight: 400,
+    fontSize: 13,
+    lineHeight: 18,
   },
 });
 

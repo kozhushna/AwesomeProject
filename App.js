@@ -1,5 +1,8 @@
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  createAppContainer,
+} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
@@ -13,9 +16,9 @@ import LogOut from './src/Icons/LogOut.svg';
 import ProfileScreen from './src/Screens/ProfileScreen';
 import MapScreen from './src/Screens/MapScreen';
 import CommentsScreen from './src/Screens/CommentsScreen';
+import TabNavigator from './src/Components/TabNavigator';
 
 const MainStack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
@@ -85,38 +88,9 @@ export default function App() {
 
           <MainStack.Screen
             name="Home"
-            component={PostsScreen}
+            component={TabNavigator}
             options={{
-              title: 'Публікації',
-              headerShown: true,
-              headerTitleAlign: 'center',
-              headerStyle: {
-                borderBottomWidth: 1,
-                borderBottomColor: 'rgba(0, 0, 0, 0.3)',
-              },
-              headerTintColor: '#212121',
-              headerTitleStyle: {
-                fontFamily: 'Roboto',
-                fontWeight: 500,
-                fontSize: 17,
-                lineHeight: 22,
-              },
-              headerLeft: () => null,
-              headerRight: () => {
-                const navigation = useNavigation();
-                return (
-                  <TouchableOpacity
-                    style={styles.button}
-                    title="Log Out"
-                    onPress={() => navigation.navigate('Login')}
-                    color="white"
-                  >
-                    <View style={styles.buttonContainer}>
-                      <LogOut width={24} height={24} />
-                    </View>
-                  </TouchableOpacity>
-                );
-              },
+              headerShown: false,
             }}
           />
 
@@ -141,15 +115,19 @@ export default function App() {
             }}
           />
 
-          <MainStack.Screen
+          {/* <MainStack.Screen
             name="Profile"
             component={ProfileScreen}
+            
             options={{
-              title: 'Profile',
               headerShown: false,
-              headerTitleAlign: 'center',
             }}
-          />
+          /> */}
+          {/* <MainStack.Screen
+            name="Home"
+            component={TabNavigator}
+            options={{ headerShown: false }}
+          /> */}
         </MainStack.Navigator>
       </NavigationContainer>
       {/* <NavigationContainer>
