@@ -202,9 +202,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F6F6',
     borderColor: '#E8E8E8',
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 100,
     marginBottom: 16,
-    paddingHorizontal: 8,
+    paddingHorizontal: 16,
   },
 
   button: {
