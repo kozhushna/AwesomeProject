@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import {
-  View,
-  TextInput,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Platform,
-} from 'react-native';
+import { View, TextInput, Pressable, StyleSheet, Text } from 'react-native';
 
 const CreatePostScreen = () => {
   const [name, setName] = useState('');
@@ -43,19 +32,11 @@ const CreatePostScreen = () => {
           <AntDesign name="enviromento" size={24} color="#BDBDBD" />
         </Text>
 
-        <Pressable
-          title="publish"
-          style={styles.button}
-          // onPress={() => navigation.navigate('Home')}
-        >
+        <Pressable title="publish" style={styles.button}>
           <Text style={styles.buttonText}>Опублікувати</Text>
         </Pressable>
         <View style={styles.buttonHolder}>
-          <Pressable
-            title="delete"
-            style={styles.deleteButton}
-            // onPress={() => navigation.navigate('Home')}
-          >
+          <Pressable title="delete" style={styles.deleteButton}>
             <AntDesign name="delete" size={24} color="#DADADA" />
           </Pressable>
         </View>

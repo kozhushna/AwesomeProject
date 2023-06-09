@@ -117,9 +117,7 @@ const styles = StyleSheet.create({
   },
 
   commentContainer: {
-    // paddingHorizontal: 8,
     marginBottom: 32,
-    // flex: 0,
     width: 343,
 
     alignItems: 'flex-start',
@@ -138,10 +136,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    // height: '100%',
-    // minHeight: 70,
-    // flex: 0,
-    // gap: 24,
   },
 
   contentContainer: {
