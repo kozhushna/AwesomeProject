@@ -6,7 +6,10 @@ import {
   Image,
   SafeAreaView,
   VirtualizedList,
+  TouchableHighlight,
+  TextInput,
 } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import Sea from '../Images/Sea.jpg';
 
 const COMMENTS = [
@@ -28,10 +31,17 @@ const COMMENTS = [
     text: 'Thank you! That was very helpful!',
     date: '09 червня, 2020 | 09:20',
   },
+  {
+    id: '4',
+    image: require('../Images/Avatar.png'),
+    text: 'Thank you! That was very helpful!',
+    date: '09 червня, 2020 | 09:20',
+  },
 ];
 
 const CommentScreen = () => {
   const [comments, setComments] = useState(COMMENTS);
+  const [comment, setComment] = useState('');
 
   const renderItem = (item, index) => (
     <View
@@ -81,6 +91,18 @@ const CommentScreen = () => {
           getItem={getItem}
         />
       </SafeAreaView>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Коментувати..."
+          value={comment}
+        />
+
+        <TouchableHighlight style={styles.button}>
+          <AntDesign name="arrowup" size={14} color="#FFFFFF" />
+        </TouchableHighlight>
+      </View>
     </View>
   );
 };
@@ -113,10 +135,13 @@ const styles = StyleSheet.create({
   },
 
   mainContainer: {
-    height: '100%',
-    minHeight: 70,
-    flex: 0,
-    gap: 24,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // height: '100%',
+    // minHeight: 70,
+    // flex: 0,
+    // gap: 24,
   },
 
   contentContainer: {
@@ -166,6 +191,33 @@ const styles = StyleSheet.create({
     height: 240,
     marginBottom: 32,
     marginLeft: 10,
+  },
+
+  inputContainer: {
+    marginBottom: 16,
+  },
+
+  input: {
+    height: 50,
+    backgroundColor: '#F6F6F6',
+    borderColor: '#E8E8E8',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+  },
+
+  button: {
+    position: 'absolute',
+    top: 8,
+    right: 16,
+    flex: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 34,
+    height: 34,
+    backgroundColor: '#FF6C00',
+    borderRadius: 20,
   },
 });
 
