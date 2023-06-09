@@ -22,6 +22,8 @@ const PUBLICATIONS = [
     comments: '8',
     likes: '153',
     location: "Ivano-Frankivs'k Region, Ukraine",
+    latitude: 48.9215,
+    longitude: 24.70972,
   },
   {
     id: '2',
@@ -30,6 +32,8 @@ const PUBLICATIONS = [
     comments: '3',
     likes: '200',
     location: 'Ukraine',
+    latitude: 46.482952,
+    longitude: 30.712481,
   },
   {
     id: '3',
@@ -38,6 +42,8 @@ const PUBLICATIONS = [
     comments: '50',
     likes: '200',
     location: 'Italy',
+    latitude: 45.438759,
+    longitude: 12.327145,
   },
 ];
 
@@ -59,8 +65,13 @@ const PostsScreen = () => {
         <View style={styles.locationHolder}>
           <AntDesign name="enviromento" size={24} color="#BDBDBD" />
           <TouchableOpacity
-            title="Log Out"
-            onPress={() => navigation.navigate('Map')}
+            title="Location"
+            onPress={() =>
+              navigation.navigate('Map', {
+                latitude: item.latitude,
+                longitude: item.longitude,
+              })
+            }
             color="white"
           >
             <Text style={[styles.text, styles.underline]}>{item.location}</Text>
@@ -79,6 +90,8 @@ const PostsScreen = () => {
       comments: entity.comments,
       likes: entity.likes,
       location: entity.location,
+      latitude: entity.latitude,
+      longitude: entity.longitude,
     };
   };
 
