@@ -40,12 +40,17 @@ const CommentScreen = () => {
         index % 2 === 0 ? styles.evenRow : styles.oddRow,
       ]}
     >
-      <Image source={item.image} style={styles.image} />
+      <Image source={item.image} />
       <View style={styles.contentContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{item.text}</Text>
         </View>
-        <View style={styles.textContainer}>
+        <View
+          style={[
+            styles.textContainer,
+            index % 2 === 0 ? styles.evenDate : styles.oddDate,
+          ]}
+        >
           <Text style={styles.date}>{item.date}</Text>
         </View>
       </View>
@@ -120,6 +125,9 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexBasis: 'auto',
     gap: 8,
+    padding: 16,
+    backgroundColor: 'rgba(0, 0, 0, 0.03)',
+    borderRadius: 6,
   },
 
   textContainer: {
@@ -134,6 +142,30 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 13,
     lineHeight: 18,
+    marginBottom: 8,
+  },
+
+  date: {
+    fontFamily: 'Roboto',
+    fontWeight: 400,
+    fontSize: 10,
+    lineHeight: 12,
+    color: '#BDBDBD',
+  },
+
+  evenDate: {
+    justifyContent: 'flex-end',
+  },
+
+  oddDate: {
+    justifyContent: 'flex-start',
+  },
+
+  image: {
+    width: 343,
+    height: 240,
+    marginBottom: 32,
+    marginLeft: 10,
   },
 });
 
