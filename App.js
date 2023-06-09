@@ -17,6 +17,7 @@ import ProfileScreen from './src/Screens/ProfileScreen';
 import MapScreen from './src/Screens/MapScreen';
 import CommentsScreen from './src/Screens/CommentsScreen';
 import TabNavigator from './src/Components/TabNavigator';
+import { useRoute } from '@react-navigation/native';
 
 const MainStack = createStackNavigator();
 
@@ -94,7 +95,7 @@ export default function App() {
             }}
           />
 
-          <MainStack.Screen
+          {/* <MainStack.Screen
             name="Create"
             component={CreatePostsScreen}
             options={{
@@ -113,7 +114,7 @@ export default function App() {
                 lineHeight: 22,
               },
             }}
-          />
+          /> */}
 
           {/* <MainStack.Screen
             name="Profile"

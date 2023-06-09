@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
 import FormContainer from '../Components/FormContainer';
 import AvatarImageHolder from '../Components/AvatarImageHolder';
 import Message from '../Icons/Message.svg';
@@ -129,7 +128,7 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 103,
-    minHeight: 665,
+    minHeight: 600,
     paddingBottom: 45,
     paddingTop: 92,
     paddingHorizontal: 16,
