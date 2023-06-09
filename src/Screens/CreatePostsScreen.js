@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
+import * as Location from 'expo-location';
 import {
   View,
   TextInput,
@@ -10,13 +11,16 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const CreatePostScreen = () => {
   const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
+  const [place, setPlace] = useState('');
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [showImageContainer, setShowImageContainer] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -24,50 +28,57 @@ const CreatePostScreen = () => {
       await MediaLibrary.requestPermissionsAsync();
 
       setHasPermission(status === 'granted');
+      setShowImageContainer(status !== 'granted');
     })();
   }, []);
 
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  const handlePublishButtonPress = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied');
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    navigation.navigate('HomeTab', {
+      name,
+      place,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    });
+  };
+  const isPublishButtonEnabled = () => name && place;
 
   return (
     <View>
       <View style={styles.container}>
-        <View style={styles.fotoInput}>
-          {/* <View style={styles.imageHolder}> */}
-          <Camera style={styles.camera} type={type} ref={setCameraRef}>
-            <View style={styles.photoView}>
-              {/* <TouchableOpacity
-                style={styles.flipContainer}
-                onPress={() => {
-                  setType(
-                    type === Camera.Constants.Type.back
-                      ? Camera.Constants.Type.front
-                      : Camera.Constants.Type.back
-                  );
-                }}
-              >
-                
-              </TouchableOpacity> */}
-              <TouchableOpacity
-                style={styles.imageHolder}
-                onPress={async () => {
-                  if (cameraRef) {
-                    const { uri } = await cameraRef.takePictureAsync();
-                    await MediaLibrary.createAssetAsync(uri);
-                  }
-                }}
-              >
-                <AntDesign name="camera" size={24} color="#BDBDBD" />
-              </TouchableOpacity>
+        {!showImageContainer ? (
+          <View style={styles.fotoInput}>
+            <Camera style={styles.camera} type={type} ref={setCameraRef}>
+              <View style={styles.photoView}>
+                <TouchableOpacity
+                  style={[
+                    styles.imageHolder,
+                    cameraRef ? styles.imageHolderActive : null,
+                  ]}
+                  onPress={async () => {
+                    if (cameraRef) {
+                      const { uri } = await cameraRef.takePictureAsync();
+                      await MediaLibrary.createAssetAsync(uri);
+                    }
+                  }}
+                >
+                  <AntDesign name="camera" size={24} color="#FFFFFF" />
+                </TouchableOpacity>
+              </View>
+            </Camera>
+          </View>
+        ) : (
+          <View style={styles.fotoInput}>
+            <View style={styles.imageHolder}>
+              <AntDesign name="camera" size={24} color="#BDBDBD" />
             </View>
-          </Camera>
-          {/* </View> */}
-        </View>
+          </View>
+        )}
         <Pressable title="Upload" style={styles.uploadButton}>
           <Text style={styles.buttonText}>Завантажте фото</Text>
         </Pressable>
@@ -80,15 +91,30 @@ const CreatePostScreen = () => {
         <TextInput
           style={styles.inputLocation}
           placeholder="Місцевість..."
-          onChangeText={setLocation}
-          value={location}
+          onChangeText={setPlace}
+          value={place}
         />
         <Text style={styles.locationImage}>
           <AntDesign name="enviromento" size={24} color="#BDBDBD" />
         </Text>
 
-        <Pressable title="publish" style={styles.button}>
-          <Text style={styles.buttonText}>Опублікувати</Text>
+        <Pressable
+          title="publish"
+          disabled={!isPublishButtonEnabled()}
+          style={[
+            styles.button,
+            isPublishButtonEnabled() ? styles.buttonEnabled : null,
+          ]}
+          onPress={handlePublishButtonPress}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              isPublishButtonEnabled() ? styles.buttonTextEnabled : null,
+            ]}
+          >
+            Опублікувати
+          </Text>
         </Pressable>
         <View style={styles.buttonHolder}>
           <Pressable title="delete" style={styles.deleteButton}>
@@ -136,6 +162,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
+  imageHolderActive: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  },
+
   camera: {
     flex: 1,
     width: '100%',
@@ -153,28 +183,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
 
-  button: { alignSelf: 'center' },
-
-  // takePhotoOut: {
-  //   borderWidth: 2,
-  //   borderColor: 'white',
-  //   height: 50,
-  //   width: 50,
-  //   display: 'flex',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   borderRadius: 50,
-  // },
-
-  // takePhotoInner: {
-  //   borderWidth: 2,
-  //   borderColor: 'white',
-  //   height: 40,
-  //   width: 40,
-  //   backgroundColor: 'white',
-  //   borderRadius: 50,
-  // },
-
   uploadButton: {
     width: 131,
     height: 19,
@@ -188,6 +196,14 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     color: '#BDBDBD',
     textAlign: 'center',
+  },
+
+  buttonEnabled: {
+    backgroundColor: '#FF6C00',
+  },
+
+  buttonTextEnabled: {
+    color: '#FFFFFF',
   },
 
   text: {

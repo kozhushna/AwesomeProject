@@ -47,8 +47,10 @@ const PUBLICATIONS = [
   },
 ];
 
-const PostsScreen = () => {
+const PostsScreen = ({ route }) => {
   const [publications, setPublications] = useState(PUBLICATIONS);
+  const data = route.params ? route.params : {};
+  console.log(data);
 
   const renderItem = (item) => (
     <View style={styles.itemContainer}>
