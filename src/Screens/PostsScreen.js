@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   View,
@@ -12,6 +12,7 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 import UserImage from '../Images/User.png';
 import MessageCircle from '../Icons/MessageCircle.svg';
+import { useAuth } from '../Redux/useAuth';
 
 const PUBLICATIONS = [
   {
@@ -48,8 +49,17 @@ const PUBLICATIONS = [
 
 const PostsScreen = ({ route }) => {
   const [publications, setPublications] = useState(PUBLICATIONS);
+  const navigation = useNavigation();
   const data = route.params ? route.params : {};
-  console.log(data);
+  const { isLoggedIn, user } = useAuth();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigation.navigate('Login');
+      return;
+    }
+  }, [isLoggedIn]);
+  console.log(user);
 
   const renderItem = (item) => (
     <View style={styles.itemContainer}>
@@ -107,15 +117,14 @@ const PostsScreen = ({ route }) => {
   };
 
   const getItemCount = (_data) => publications.length;
-  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <View style={styles.holder}>
         <Image source={UserImage} />
         <View style={styles.textHolder}>
-          <Text style={styles.caption}>Natali Romanova</Text>
-          <Text style={styles.email}>email@example.com</Text>
+          <Text style={styles.caption}>{user.displayName}</Text>
+          <Text style={styles.email}>{user.email}</Text>
         </View>
       </View>
       <SafeAreaView style={styles.mainContainer}>

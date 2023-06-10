@@ -7,6 +7,9 @@ import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import LogOut from '../Icons/LogOut.svg';
 import CreatePostScreen from '../Screens/CreatePostsScreen';
+import { logOut } from '../Services/auth-service';
+import { useDispatch } from 'react-redux';
+import { clearUser } from '../Redux/userActions';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,11 +53,16 @@ const TabNavigator = () => {
           headerLeft: () => null,
           headerRight: () => {
             const navigation = useNavigation();
+            const dispatch = useDispatch();
             return (
               <TouchableOpacity
                 style={styles.button}
                 title="Log Out"
-                onPress={() => navigation.navigate('Login')}
+                onPress={async () => {
+                  await logOut();
+                  dispatch(clearUser());
+                  navigation.navigate('Login');
+                }}
                 color="white"
               >
                 <View style={styles.buttonContainer}>
