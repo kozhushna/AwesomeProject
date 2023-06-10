@@ -6,6 +6,7 @@ export const storeUser = (user) => {
         email: user.email,
         displayName: user.dispalayName,
         isLoggedIn: true,
+        id: user.uid,
       },
     },
   };

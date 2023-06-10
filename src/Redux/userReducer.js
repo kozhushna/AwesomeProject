@@ -3,6 +3,7 @@ const initialState = {
     email: '',
     displayName: '',
     isLoggedIn: false,
+    id: '',
   },
 };
 

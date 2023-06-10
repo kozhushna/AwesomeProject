@@ -10,8 +10,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { loginDB } from '../Services/auth-service';
+import { useDispatch } from 'react-redux';
+import { storeUser } from '../Redux/userActions';
 
 const SignUpForm = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +24,7 @@ const SignUpForm = () => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isPasswordShowed, setIsPasswordShowed] = useState(true);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleInputEmailFocus = () => {
     setIsEmailFocused(true);
@@ -39,6 +44,23 @@ const SignUpForm = () => {
 
   const handlePasswordPress = (state) => {
     setIsPasswordShowed(state);
+  };
+
+  const logInUser = async () => {
+    if (!email || !password) {
+      Alert.alert('Please fill all fields.');
+    }
+    try {
+      const user = await loginDB(email, password);
+      console.log(user);
+
+      dispatch(storeUser(user));
+      setEmail('');
+      setPassword('');
+      navigation.navigate('Home');
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   return (
@@ -81,11 +103,7 @@ const SignUpForm = () => {
             </TouchableHighlight>
           </View>
 
-          <Pressable
-            title="Sign Up"
-            style={styles.button}
-            onPress={() => navigation.navigate('Home')}
-          >
+          <Pressable title="Sign Up" style={styles.button} onPress={logInUser}>
             <Text style={styles.buttonText}>Увійти</Text>
           </Pressable>
           <View style={styles.holder}>

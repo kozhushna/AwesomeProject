@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { registerDB, updateUserProfile } from '../Services/auth-service';
+import { registerDB } from '../Services/auth-service';
 import { storeUser } from '../Redux/userActions';
 
 import AvatarHolder from './AvatarHolder';
@@ -63,11 +63,10 @@ const SignUpForm = () => {
       Alert.alert('Please fill all fields.');
     }
     try {
-      const user = await registerDB(email, password);
-      const updatedUser = await updateUserProfile(login);
-      console.log(user, updatedUser);
+      const user = await registerDB(email, password, login);
+      console.log(user);
 
-      dispatch(storeUser(updatedUser));
+      dispatch(storeUser(user));
       setEmail('');
       setLogin('');
       setPassword('');
