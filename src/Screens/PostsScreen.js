@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import UserImage from '../Images/User.png';
 import MessageCircle from '../Icons/MessageCircle.svg';
 
@@ -59,7 +58,17 @@ const PostsScreen = ({ route }) => {
       <View style={styles.panelHolder}>
         <View style={styles.activitiesHolder}>
           <View style={styles.commentsHolder}>
-            <MessageCircle />
+            <TouchableOpacity
+              title="Location"
+              onPress={() =>
+                navigation.navigate('Comments', {
+                  id: item.id,
+                })
+              }
+              color="white"
+            >
+              <MessageCircle />
+            </TouchableOpacity>
 
             <Text style={styles.text}>{item.comments}</Text>
           </View>
