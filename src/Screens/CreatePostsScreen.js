@@ -12,6 +12,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { addPost } from '../Redux/postsActions';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../Redux/useAuth';
+import { createPost } from '../Services/posts-service';
 
 const CreatePostScreen = () => {
   const [name, setName] = useState('');
@@ -21,6 +25,8 @@ const CreatePostScreen = () => {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [showImageContainer, setShowImageContainer] = useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { user } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -39,12 +45,17 @@ const CreatePostScreen = () => {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    navigation.navigate('HomeTab', {
+    let posts = await createPost({
+      userId: user.id,
       name,
       place,
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     });
+    dispatch(addPost(posts));
+    setName('');
+    setPlace('');
+    navigation.navigate('HomeTab');
   };
   const isPublishButtonEnabled = () => name && place;
 

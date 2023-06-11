@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import {
   View,
@@ -13,6 +14,10 @@ import { AntDesign } from '@expo/vector-icons';
 import UserImage from '../Images/User.png';
 import MessageCircle from '../Icons/MessageCircle.svg';
 import { useAuth } from '../Redux/useAuth';
+import { selectPosts } from '../Redux/selectors';
+import { getAllPosts } from '../Services/posts-service';
+import { addPosts } from '../Redux/postsActions';
+import { useDispatch } from 'react-redux';
 
 const PUBLICATIONS = [
   {
@@ -48,18 +53,27 @@ const PUBLICATIONS = [
 ];
 
 const PostsScreen = ({ route }) => {
-  const [publications, setPublications] = useState(PUBLICATIONS);
+  // const [publications, setPublications] = useState(PUBLICATIONS);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const data = route.params ? route.params : {};
   const { isLoggedIn, user } = useAuth();
-
+  const publications = useSelector(selectPosts);
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigation.navigate('Login');
-      return;
-    }
-  }, [isLoggedIn]);
-  console.log(user);
+    // if (!isLoggedIn) {
+    //   navigation.navigate('Login');
+    //   return;
+    // }
+    (async () => {
+      console.log(publications.length);
+
+      if (publications.length === 0) {
+        const posts = await getAllPosts(user.id);
+        console.log(posts);
+
+        dispatch(addPosts(posts));
+      }
+    })();
+  }, []);
 
   const renderItem = (item) => (
     <View style={styles.itemContainer}>
@@ -95,7 +109,7 @@ const PostsScreen = ({ route }) => {
             }
             color="white"
           >
-            <Text style={[styles.text, styles.underline]}>{item.location}</Text>
+            <Text style={[styles.text, styles.underline]}>{item.place}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -110,7 +124,7 @@ const PostsScreen = ({ route }) => {
       image: entity.image,
       comments: entity.comments,
       likes: entity.likes,
-      location: entity.location,
+      place: entity.place,
       latitude: entity.latitude,
       longitude: entity.longitude,
     };

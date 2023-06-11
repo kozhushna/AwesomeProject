@@ -4,7 +4,7 @@ export const storeUser = (user) => {
     payload: {
       auth: {
         email: user.email,
-        displayName: user.dispalayName,
+        displayName: user.displayName,
         isLoggedIn: true,
         id: user.uid,
       },

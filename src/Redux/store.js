@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import {
   persistReducer,
   persistStore,
@@ -12,14 +12,18 @@ import {
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import userReducer from './userReducer';
+import postsReducer from './postsReducer';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   whitelist: ['user'],
 };
-
-const persistedReducer = persistReducer(persistConfig, userReducer);
+const rootReducer = combineReducers({
+  posts: postsReducer,
+  user: userReducer,
+});
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = createStore(persistedReducer);
 
 // export const store = configureStore({
